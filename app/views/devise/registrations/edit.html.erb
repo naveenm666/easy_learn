@@ -4,28 +4,28 @@
   <%= render "devise/shared/error_messages", resource: resource %>
   
   <div class="field">
-    <%= f.label :first_name %>
+    <%= f.label :first_name %><br />
     <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name" %>
   </div>
 
   <div class="field">
-    <%= f.label :last_name %>
-    <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name" %>
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name, autocomplete: "last_name" %>
   </div>
 
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.label :phone_number %><br />
+    <%= f.number_field :phone_number, autocomplete: "phone_number" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :education_qualification %><br />
+    <%= f.text_field :education_qualification, autocomplete: "education_qualification" %>
   </div>
 
   <div class="field">
     <%= f.label :phone %>
     <%= f.telephone_field :phone, autocomplete: "tel" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :education_qualification %>
-    <%= f.text_field :education_qualification, autocomplete: "education" %>
   </div>
 
   <div class="field">
@@ -36,6 +36,11 @@
   <div class="field">
     <%= f.label :work_experience %>
     <%= f.number_field :work_experience, autocomplete: "work_experience" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
