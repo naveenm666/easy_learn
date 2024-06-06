@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
+  get 'tutor/index'
+  get 'students/index'
+  devise_for :tutors
   devise_for :students
-  root "students#index"
+  root "home#index"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
