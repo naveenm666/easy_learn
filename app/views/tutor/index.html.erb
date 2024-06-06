@@ -1,0 +1,9 @@
+<h1>Welcome to the Tutor Portal</h1>
+
+<% if tutor_signed_in? %>
+  <%= link_to 'Edit profile', edit_tutor_registration_path %>
+  <%= link_to "Sign out", destroy_tutor_session_path, data: { turbo_method: :delete } %>
+<% else %>
+  <%= link_to 'Log in', new_tutor_session_path %>
+  <%= link_to 'Sign up', new_tutor_registration_path %>
+<% end %>
