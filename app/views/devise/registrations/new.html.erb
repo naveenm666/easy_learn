@@ -12,31 +12,35 @@
     <%= f.label :last_name %><br />
     <%= f.text_field :last_name, autocomplete: "last_name" %>
   </div>
-
-  <div class="field">
-    <%= f.label :phone_number %><br />
-    <%= f.number_field :phone_number, autocomplete: "phone_number" %>
-  </div>
+  
+  <% if resource_class == Student %>
+    <div class="field">
+      <%= f.label :phone_number %><br>
+      <%= f.number_field :phone_number, autocomplete: "tel" %>
+    </div>
+  <% elsif resource_class == Tutor %>
+    <div class="field">
+      <%= f.label :phone %><br>
+      <%= f.telephone_field :phone, autocomplete: "tel" %>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= f.label :education_qualification %><br />
     <%= f.text_field :education_qualification, autocomplete: "education_qualification" %>
   </div>
 
-  <div class="field">
-    <%= f.label :phone %><br>
-    <%= f.telephone_field :phone, autocomplete: "tel" %>
-  </div>
+  <% if resource_class == Tutor %>
+    <div class="field">
+      <%= f.label :profession %><br />
+      <%= f.text_field :profession, autocomplete: "organization-title" %>
+    </div>
 
-  <div class="field">
-    <%= f.label :profession %><br>
-    <%= f.text_field :profession, autocomplete: "organization-title" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :work_experience %><br/>
-    <%= f.number_field :work_experience, autocomplete: "work-experience" %>
-  </div>
+    <div class="field">
+      <%= f.label :work_experience %><br />
+      <%= f.number_field :work_experience, autocomplete: "work-experience" %>
+    </div>
+ <% end %>
 
   <div class="field">
     <%= f.label :email %><br />
