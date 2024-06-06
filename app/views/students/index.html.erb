@@ -1,7 +1,7 @@
 <h1>Welcome to the Student Portal</h1>
 
 <% if student_signed_in? %>
-  <p>Welcome, <%= current_student.name %>!</p>
+  <p>Welcome, <%= "#{current_student.first_name} #{current_student.last_name}" %>!</p>
   <%= link_to 'Edit profile', edit_student_registration_path %>
   <%= link_to "Sign out", destroy_student_session_path, data: { turbo_method: :delete } %>
 <% else %>

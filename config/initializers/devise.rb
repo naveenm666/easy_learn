@@ -25,7 +25,7 @@ Devise.setup do |config|
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
   config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
-
+  
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
 
@@ -129,10 +129,10 @@ Devise.setup do |config|
   # config.pepper = 'cd2da6108a3cb58aef737b9baf079ac94c2b0e4154f29628afe8237b43be9b5923c717355969c2e384a20320edaab3006ff294602ad6d6bcb9edf5a7f74cfaba'
 
   # Send a notification to the original email when the user's email is changed.
-  # config.send_email_changed_notification = false
+  #config.send_email_changed_notification = false
 
   # Send a notification email when the user's password is changed.
-  # config.send_password_change_notification = false
+  #config.send_password_change_notification = false
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -160,7 +160,7 @@ Devise.setup do |config|
   config.reconfirmable = true
 
   # Defines which key will be used when confirming an account
-  # config.confirmation_keys = [:email]
+   #config.confirmation_keys = [:email]
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
