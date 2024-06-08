@@ -1,0 +1,26 @@
+<!-- app/views/courses/_form.html.erb -->
+<%= form_with(model: course, url: courses_path) do |form| %>
+  <div>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+  <div>
+    <%= form.label :technologies %>
+    <%= form.text_field :technologies %>
+  </div>
+  <div>
+    <%= form.label :duration %>
+    <%= form.number_field :duration %>
+  </div>
+  <div>
+    <%= form.label :table_of_contents %>
+    <%= form.text_area :table_of_contents %>
+  </div>
+  <div>
+    <%= form.label :price %>
+    <%= form.number_field :price, step: '0.01' %>
+  </div>
+  <div>
+    <%= form.submit "Create Course" %>
+  </div>
+<% end %>
