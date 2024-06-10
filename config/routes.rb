@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'tutor/index'
   get 'students/index'
+  resources :courses
   devise_for :tutors
   devise_for :students
   root "home#index"
