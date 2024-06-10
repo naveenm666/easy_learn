@@ -6,17 +6,44 @@
   <%= link_to 'Create a new course', new_course_path %>
   <h1>Your Courses</h1>
 
+  
+
 <% @courses.each do |course| %>
   <div>
     <h2><%= course.title %></h2>
-    <p><strong>Technologies:</strong> <%= course.technologies %></p>
-    <p><strong>Duration:</strong> <%= course.duration %> minutes</p>
-    <p><strong>Table of Contents:</strong></p>
-    <p><%= course.table_of_contents %></p>
-    <p><strong>Price:</strong> <%= number_to_currency(course.price) %></p>
+
+    <div>
+      <strong>Technologies:</strong>
+      <%= course.technologies %>
+    </div>
+
+    <div>
+    <strong>Duration:</strong>
+     <%= @course.formatted_duration %>
+    </div>
+
+    <div>
+      <strong>Table of Contents:</strong>
+      <%= course.table_of_contents %>
+    </div>
+
+    <div>
+    <strong>Free or Paid:</strong>
+    <%= course.free_or_paid.present? ? course.free_or_paid.capitalize : "Not specified" %>
   </div>
-  <hr>
+
+  <% if course.free_or_paid == "paid" %>
+  <div>
+    <strong>Price:</strong>
+    <%= number_to_currency(course.price, unit: "₹") %>
+  </div>
 <% end %>
+
+  </div>
+<% end %>
+
+  
+  
 <% else %>
   <%= link_to 'Log in', new_tutor_session_path %>
   <%= link_to 'Sign up', new_tutor_registration_path %>

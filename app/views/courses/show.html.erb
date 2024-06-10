@@ -1,6 +1,28 @@
-<h1><%= @course.title %></h1>
-<p><strong>Technologies:</strong> <%= @course.technologies %></p>
-<p><strong>Duration:</strong> <%= @course.duration %> minutes</p>
-<p><strong>Table of Contents:</strong></p>
-<p><%= @course.table_of_contents %></p>
-<p><strong>Price:</strong> <%= number_to_currency(@course.price) %></p>
+<h2><%= @course.title %></h2>
+
+<div>
+  <strong>Technologies:</strong>
+  <%= @course.technologies %>
+</div>
+
+<div>
+  <strong>Duration:</strong>
+   <%= @course.formatted_duration %>
+</div>
+
+<div>
+  <strong>Table of Contents:</strong>
+  <%= @course.table_of_contents %>
+</div>
+
+<div>
+  <strong>Free or Paid:</strong>
+  <%= @course.free_or_paid.nil? ? "Not specified" : @course.free_or_paid.capitalize %>
+</div>
+
+<% if @course.free_or_paid == 'paid' %>
+  <div>
+    <strong>Price:</strong>
+    <%= number_to_currency(@course.price, unit: "₹") %>
+  </div>
+<% end %>
