@@ -1,0 +1,14 @@
+<h1>Courses for <%= @tutor.first_name %> <%= @tutor.last_name %></h1>
+
+<ul>
+  <% @courses.each do |course| %>
+    <li>
+      <strong>Title:</strong> <%= course.title %><br>
+      <strong>Technologies:</strong> <%= course.technologies %><br>
+      
+      <%= link_to 'Show', tutor_course_path(@tutor, course) %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to 'Back', root_path %>

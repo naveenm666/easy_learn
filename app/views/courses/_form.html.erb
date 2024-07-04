@@ -1,0 +1,47 @@
+<%= form_with(model: [@tutor, @course], local: true) do |form| %>
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :technologies %><br>
+    <%= form.text_field :technologies %>
+  </div>
+
+  <div>
+    <%= form.label :duration %><br>
+    <%= form.text_field :duration %>
+  </div>
+
+  <div>
+    <%= form.label :table_of_contents %><br>
+    <%= form.text_area :table_of_contents %>
+  </div>
+
+  <div>
+    <%= form.label :course_type %><br>
+    <%= form.text_field :course_type %>
+  </div>
+
+  <div>
+    <%= form.label :price %><br>
+    <%= form.number_field :price, step: 0.01 %>
+  </div>
+
+  <% if @course.price.present? %>
+    <div>
+      <%= form.label :free, style: "display: none;" %><br>
+      <%= form.check_box :free, checked: false, style: "display: none;" %>
+    </div>
+  <% else %>
+    <div>
+      <%= form.label :free %><br>
+      <%= form.check_box :free %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
