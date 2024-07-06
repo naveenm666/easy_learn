@@ -13,3 +13,21 @@
  *= require_tree .
  *= require_self
  */
+
+
+ .course-cards {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .course-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px;
+    width: 200px; /* Adjust width based on your layout needs */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: #f9f9f9;
+  }
+  .course-card:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  }
