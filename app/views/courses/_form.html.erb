@@ -14,9 +14,12 @@
     <%= form.text_field :duration %>
   </div>
 
+  <div data-no-turbolink>
+
   <div>
     <%= form.label :table_of_contents %><br>
-    <%= form.text_area :table_of_contents %>
+    <%= form.text_area :table_of_contents, class: 'ckeditor' %>
+  </div>
   </div>
 
   <div>

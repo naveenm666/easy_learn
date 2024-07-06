@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
   get 'tutor/index'
   get 'students/index'
   devise_for :tutors
