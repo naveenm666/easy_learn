@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_03_124440) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_06_101344) do
   create_table "courses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "tutor_id", null: false
     t.string "title"
@@ -23,6 +23,30 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_124440) do
     t.datetime "updated_at", null: false
     t.string "course_type"
     t.index ["tutor_id"], name: "index_courses_on_tutor_id"
+  end
+
+  create_table "enrollments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "student_id", null: false
+    t.bigint "course_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_enrollments_on_course_id"
+    t.index ["student_id"], name: "index_enrollments_on_student_id"
+  end
+
+  create_table "payments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.decimal "amount", precision: 10
+    t.string "currency"
+    t.string "razorpay_order_id"
+    t.string "razorpay_payment_id"
+    t.string "razorpay_signature"
+    t.string "status"
+    t.bigint "student_id", null: false
+    t.bigint "subscription_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_payments_on_student_id"
+    t.index ["subscription_id"], name: "index_payments_on_subscription_id"
   end
 
   create_table "students", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -41,6 +65,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_124440) do
     t.index ["reset_password_token"], name: "index_students_on_reset_password_token", unique: true
   end
 
+  create_table "subscriptions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "plan"
+    t.bigint "student_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.decimal "price", precision: 10
+    t.string "razorpay_order_id"
+    t.string "razorpay_payment_id"
+    t.string "razorpay_signature"
+    t.boolean "paid"
+    t.index ["student_id"], name: "index_subscriptions_on_student_id"
+  end
+
   create_table "tutors", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -55,9 +94,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_124440) do
     t.string "education_qualification"
     t.string "profession"
     t.integer "work_experience"
+    t.string "name"
     t.index ["email"], name: "index_tutors_on_email", unique: true
     t.index ["reset_password_token"], name: "index_tutors_on_reset_password_token", unique: true
   end
 
   add_foreign_key "courses", "tutors"
+  add_foreign_key "enrollments", "courses"
+  add_foreign_key "enrollments", "students"
+  add_foreign_key "payments", "students"
+  add_foreign_key "payments", "subscriptions"
+  add_foreign_key "subscriptions", "students"
 end

@@ -8,3 +8,78 @@
   <%= link_to 'Log in', new_student_session_path %>
   <%= link_to 'Sign up', new_student_registration_path %>
 <% end %>
+
+<h2>Available Courses:</h2>
+<div class="course-cards">
+  <% @courses.each do |course| %>
+    <div class="course-card" data-course-id="<%= course.id %>" data-course-title="<%= course.title %>" data-course-price="<%= (course.price || 0) * 100 %>">
+      <strong>Title:</strong> <%= course.title %><br>
+      <strong>Technologies:</strong> <%= course.technologies %><br>
+      <strong>Duration:</strong> <%= course.duration %><br>
+      
+      <% if course.price.nil? || course.price <= 0 %>
+        <strong>Price:</strong> Free<br>
+        <button class="enroll-button" data-course-id="<%= course.id %>">Enroll for Free</button>
+      <% else %>
+        <strong>Price:</strong> <%= number_to_currency(course.price, unit: '₹') %><br>
+        <button class="buy-button" data-course-id="<%= course.id %>" data-course-title="<%= course.title %>" data-course-price="<%= (course.price * 100).to_i %>">Buy</button>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<!-- include Razorpay checkout.js -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<!-- Script to initialize Razorpay payment for each course -->
+<script>
+  // Function to handle Razorpay payment initialization
+  function initializeRazorpay(courseId, amount) {
+    var options = {
+      "key": "rzp_test_wusp9OEcExapGS", // Replace with your Razorpay API Key
+      "amount": amount.toString(), // Amount in paise
+      "currency": "INR",
+      "name": "Acme Corp",
+      "description": "Course Payment",
+      "image": "https://example.com/your_logo",
+      "handler": function (response) {
+        alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature);
+        // Handle successful payment response
+      },
+      "prefill": {
+        "name": "<%= current_student.last_name %>",
+        "email": "<%= current_student.email %>",
+        "contact": "<%= current_student.phone_number %>"
+      },
+      "notes": {
+        "address": "Razorpay Corporate Office"
+      },
+      "theme": {
+        "color": "#3399cc"
+      }
+    };
+
+    var rzp = new Razorpay(options);
+    rzp.open();
+  }
+
+  // Event listener for Buy button clicks
+  document.querySelectorAll('.buy-button').forEach(button => {
+    button.addEventListener('click', function() {
+      var courseId = this.getAttribute('data-course-id');
+      var courseTitle = this.getAttribute('data-course-title');
+      var coursePrice = this.getAttribute('data-course-price');
+      initializeRazorpay(courseId, coursePrice);
+    });
+  });
+
+  // Optional: Event listener for Enroll for Free button clicks
+  document.querySelectorAll('.enroll-button').forEach(button => {
+    button.addEventListener('click', function() {
+      var courseId = this.getAttribute('data-course-id');
+      // Handle enrollment logic for free courses
+    });
+  });
+</script>
