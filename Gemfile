@@ -70,3 +70,9 @@ end
 
 gem 'devise'
 gem 'razorpay'
+
+gem 'ckeditor'
+gem 'paperclip'
+gem "mini_magick"
+gem 'carrierwave'
+gem 'dragonfly'
