@@ -9,10 +9,11 @@ Rails.application.routes.draw do
     resources :courses
   end
   resources :students, only: [:index] do
-    member do
-      post :create_razorpay_order
-    end
+    resources :transactions
   end
+  
+  get 'courses/:id/buy', to: 'courses#buy', as: 'buy_course'
+  post '/verify_payment', to: 'transactions#verify_payment'
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

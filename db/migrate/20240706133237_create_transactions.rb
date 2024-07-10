@@ -1,8 +1,9 @@
-class CreateEnrollments < ActiveRecord::Migration[7.1]
+class CreateTransactions < ActiveRecord::Migration[7.1]
   def change
-    create_table :enrollments do |t|
+    create_table :transactions do |t|
       t.references :student, null: false, foreign_key: true
       t.references :course, null: false, foreign_key: true
+      t.string :order_id
 
       t.timestamps
     end

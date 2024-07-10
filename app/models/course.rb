@@ -1,8 +1,8 @@
 class Course < ApplicationRecord
   belongs_to :tutor 
-  has_many :enrollments
-  has_many :students, through: :enrollments
   accepts_nested_attributes_for :tutor  
+  has_many :transactions
+  has_many :students, through: :transactions
   
   validates :title, presence: true
   validates :price, presence: true, if: -> { !free }

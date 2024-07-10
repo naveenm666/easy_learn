@@ -1,0 +1,32 @@
+<h1>Your Transactions</h1>
+
+<% if @transactions.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Course Title</th>
+        <th>Order ID</th>
+        <th>Payment ID</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Purchased On</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @transactions.each do |transaction| %>
+        <tr>
+          <td><%= transaction.course.title %></td>
+          <td><%= transaction.order_id %></td>
+          <td><%= transaction.payment_id %></td>
+          <td><%= number_to_currency(transaction.course.price, unit: '₹') %></td>
+          <td><%= transaction.status %></td>
+          <td><%= transaction.created_at.strftime("%d %B %Y, %I:%M %p") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No transactions found.</p>
+<% end %>
+
+<%= link_to 'Back to Students', students_index_path %>
