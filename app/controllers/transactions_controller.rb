@@ -19,10 +19,10 @@ class TransactionsController < ApplicationController
       expected_signature = Razorpay::Utility.verify_payment_signature(
         razorpay_order_id: orderId,
         razorpay_payment_id: paymentId,
-       razorpay_signature: signature,
-       )
+        razorpay_signature: signature,
+      )
 
-       if expected_signature
+      if expected_signature
         render json: { success: true, redirect_url: students_path }
       else
         render json: { success: false }, status: :unprocessable_entity

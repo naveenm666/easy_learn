@@ -22,7 +22,7 @@
       <% if course.price.nil? || course.price <= 0 %>
         <strong>Price:</strong> Free<br>
         <button class="enroll-button" data-course-id="<%= course.id %>">Enroll for Free</button>
-        <% else %>
+      <% else %>
         <% if current_student.transactions.find_by(course_id: course.id).present? %>
           <% transaction = current_student.transactions.find_by(course_id: course.id) %>
           <% if transaction.order_id.present? && transaction.payment_id.present? && transaction.status == 'success' %>
