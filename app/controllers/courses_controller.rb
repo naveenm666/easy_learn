@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_tutor, except: :buy
+  before_action :set_tutor, except: :buy 
   before_action :set_course, only: [:buy]
 
 
@@ -54,6 +54,13 @@ class CoursesController < ApplicationController
       )
 
       @order_id = order.id
+
+      current_student.transactions.create!(
+        course: @course,
+        order_id: @order_id,
+        payment_id:'nill',
+        status: 'pending'
+      )
 
     rescue Razorpay::Error => e
       Rails.logger.error "Razorpay Error: #{e.message}"
