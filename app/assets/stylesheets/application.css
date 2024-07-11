@@ -31,3 +31,20 @@
   .course-card:hover {
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
   }
+  /* Add this CSS to your stylesheet */
+ .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+  }
+ .btn:hover {
+    background-color: #0056b3;
+  }

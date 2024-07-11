@@ -1,6 +1,6 @@
 class Student < ApplicationRecord
-  has_many :enrollments
-  has_many :courses, through: :enrollments
+  has_many :transactions
+  has_many :courses, through: :transactions
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

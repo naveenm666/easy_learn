@@ -1,9 +1,12 @@
+<!-- app/views/students/index.html.erb -->
+
 <h1>Welcome to the Student Portal</h1>
 
 <% if student_signed_in? %>
   <p>Welcome, <%= "#{current_student.first_name} #{current_student.last_name}" %>!</p>
   <%= link_to 'Edit profile', edit_student_registration_path %>
   <%= link_to "Sign out", destroy_student_session_path, data: { turbo_method: :delete } %>
+  <%= link_to "Transactions", student_transactions_path(current_student) %>
 <% else %>
   <%= link_to 'Log in', new_student_session_path %>
   <%= link_to 'Sign up', new_student_registration_path %>
@@ -16,70 +19,25 @@
       <strong>Title:</strong> <%= course.title %><br>
       <strong>Technologies:</strong> <%= course.technologies %><br>
       <strong>Duration:</strong> <%= course.duration %><br>
-      
       <% if course.price.nil? || course.price <= 0 %>
         <strong>Price:</strong> Free<br>
         <button class="enroll-button" data-course-id="<%= course.id %>">Enroll for Free</button>
       <% else %>
-        <strong>Price:</strong> <%= number_to_currency(course.price, unit: '₹') %><br>
-        <button class="buy-button" data-course-id="<%= course.id %>" data-course-title="<%= course.title %>" data-course-price="<%= (course.price * 100).to_i %>">Buy</button>
+        <% if current_student.transactions.find_by(course_id: course.id).present? %>
+          <% transaction = current_student.transactions.find_by(course_id: course.id) %>
+          <% if transaction.order_id.present? && transaction.payment_id.present? && transaction.status == 'success' %>
+          <button class="btn btn-primary">view</button>
+          <% else %>
+            <!-- Display price and buy button -->
+            <strong>Price:</strong> <%= number_to_currency(course.price, unit: '₹') %><br>
+            <%= link_to 'Buy', buy_course_path(course), class: 'btn btn-primary buy-button', data: { course_id: course.id, course_price: (course.price * 100).to_i } %><br>
+          <% end %>
+        <% else %>
+          <!-- No transaction, display price and buy button -->
+          <strong>Price:</strong> <%= number_to_currency(course.price, unit: '₹') %><br>
+          <%= link_to 'Buy', buy_course_path(course), class: 'btn btn-primary buy-button', data: { course_id: course.id, course_price: (course.price * 100).to_i } %><br>
+        <% end %>
       <% end %>
     </div>
   <% end %>
 </div>
-
-<!-- include Razorpay checkout.js -->
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-<!-- Script to initialize Razorpay payment for each course -->
-<script>
-  // Function to handle Razorpay payment initialization
-  function initializeRazorpay(courseId, amount) {
-    var options = {
-      "key": "rzp_test_wusp9OEcExapGS", // Replace with your Razorpay API Key
-      "amount": amount.toString(), // Amount in paise
-      "currency": "INR",
-      "name": "Acme Corp",
-      "description": "Course Payment",
-      "image": "https://example.com/your_logo",
-      "handler": function (response) {
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature);
-        // Handle successful payment response
-      },
-      "prefill": {
-        "name": "<%= current_student.last_name %>",
-        "email": "<%= current_student.email %>",
-        "contact": "<%= current_student.phone_number %>"
-      },
-      "notes": {
-        "address": "Razorpay Corporate Office"
-      },
-      "theme": {
-        "color": "#3399cc"
-      }
-    };
-
-    var rzp = new Razorpay(options);
-    rzp.open();
-  }
-
-  // Event listener for Buy button clicks
-  document.querySelectorAll('.buy-button').forEach(button => {
-    button.addEventListener('click', function() {
-      var courseId = this.getAttribute('data-course-id');
-      var courseTitle = this.getAttribute('data-course-title');
-      var coursePrice = this.getAttribute('data-course-price');
-      initializeRazorpay(courseId, coursePrice);
-    });
-  });
-
-  // Optional: Event listener for Enroll for Free button clicks
-  document.querySelectorAll('.enroll-button').forEach(button => {
-    button.addEventListener('click', function() {
-      var courseId = this.getAttribute('data-course-id');
-      // Handle enrollment logic for free courses
-    });
-  });
-</script>
