@@ -6,7 +6,6 @@ class TransactionsController < ApplicationController
   end
 
   def verify_payment
-    binding.break
     payment_response = JSON.parse(request.raw_post)
   
     secret = Rails.application.credentials.dig(:razorpay, :secret_key)
