@@ -25,17 +25,25 @@
       <% else %>
         <% if current_student.transactions.find_by(course_id: course.id).present? %>
           <% transaction = current_student.transactions.find_by(course_id: course.id) %>
-          <% if transaction.order_id.present? && transaction.payment_id.present? && transaction.status == 'success' %>
+          <% if transaction.order_id.present? && transaction.payment_id.present? && transaction.status == 'success' && !transaction.expired? %>
           <button class="btn btn-primary">view</button>
           <% else %>
             <!-- Display price and buy button -->
             <strong>Price:</strong> <%= number_to_currency(course.price, unit: '₹') %><br>
-            <%= link_to 'Buy', buy_course_path(course), class: 'btn btn-primary buy-button', data: { course_id: course.id, course_price: (course.price * 100).to_i } %><br>
+            <%= form_with url: buy_course_path(course), method: :post, local: true, html: { "data-turbo" => "false" } do |f| %>
+              <%= hidden_field_tag :course_id, course.id %>
+              <%= hidden_field_tag :course_price, (course.price * 100).to_i %>
+              <%= f.submit 'Buy', class: 'btn btn-primary' %>
+            <% end %>
           <% end %>
         <% else %>
           <!-- No transaction, display price and buy button -->
           <strong>Price:</strong> <%= number_to_currency(course.price, unit: '₹') %><br>
-          <%= link_to 'Buy', buy_course_path(course), class: 'btn btn-primary buy-button', data: { course_id: course.id, course_price: (course.price * 100).to_i } %><br>
+          <%= form_with url: buy_course_path(course), method: :post, local: true, html: { "data-turbo" => "false" } do |f| %>
+            <%= hidden_field_tag :course_id, course.id %>
+            <%= hidden_field_tag :course_price, (course.price * 100).to_i %>
+            <%= f.submit 'Buy', class: 'btn btn-primary' %>
+          <% end %>
         <% end %>
       <% end %>
     </div>

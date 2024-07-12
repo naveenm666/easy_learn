@@ -6,7 +6,6 @@ class TransactionsController < ApplicationController
   end
 
   def verify_payment
-    
     payment_response = JSON.parse(request.raw_post)
   
     secret = Rails.application.credentials.dig(:razorpay, :secret_key)
@@ -23,12 +22,24 @@ class TransactionsController < ApplicationController
       )
 
       if expected_signature
-        render json: { success: true, redirect_url: students_path }
+        # Find the transaction associated with this order
+        transaction = current_student.transactions.find_by(order_id: orderId)
+        
+        if transaction
+          transaction.update(payment_id: paymentId, status: 'success')
+          render json: { success: true, redirect_url: students_path }
+          return
+        else
+          render json: { success: false, error: 'Transaction not found for this order.' }, status: :unprocessable_entity
+          return
+        end
       else
         render json: { success: false }, status: :unprocessable_entity
+        return
       end
     rescue => e
       render json: { success: false, error: e.message }, status: :unprocessable_entity
+      return
     end
   end
 end

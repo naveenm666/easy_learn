@@ -11,8 +11,11 @@ Rails.application.routes.draw do
   resources :students, only: [:index] do
     resources :transactions
   end
-  
-  get 'courses/:id/buy', to: 'courses#buy', as: 'buy_course'
+  resources :courses do
+    member do
+      post :buy
+    end
+  end
   post '/verify_payment', to: 'transactions#verify_payment'
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
