@@ -28,7 +28,6 @@ class TransactionsController < ApplicationController
         if transaction
           transaction.update(payment_id: paymentId, status: 'success')
           CoursePurchaseNotificationJob.perform_later(current_student, transaction.course)
-          CourseExpirationNotificationJob.set(wait_until: transaction.created_at + 4.minutes).perform_later(current_student, transaction.course)
           render json: { success: true, redirect_url: students_path }
           return
         else

@@ -10,7 +10,8 @@ class Course < ApplicationRecord
   enum validity: {
     five_minute: 5.minute,
     one_hour: 1.hour,
-    one_day: 1.day
+    one_day: 1.day,
+    three_days: 3.day
   }
 
   validates :duration, presence: true
