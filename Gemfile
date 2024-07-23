@@ -76,3 +76,4 @@ gem 'paperclip'
 gem "mini_magick"
 gem 'carrierwave'
 gem 'dragonfly'
+gem 'whenever', require: false

@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
+  # before_action :check_for_expiring_transactions, if: :student_signed_in?
+
 
   protected
 

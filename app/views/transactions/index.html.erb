@@ -10,6 +10,7 @@
         <th>Amount</th>
         <th>Status</th>
         <th>Purchased On</th>
+        <th>Validity</th>
       </tr>
     </thead>
     <tbody>
@@ -21,6 +22,7 @@
           <td><%= number_to_currency(transaction.course.price, unit: '₹') %></td>
           <td><%= transaction.status %></td>
           <td><%= transaction.created_at.localtime.strftime("%d %B %Y, %I:%M %p") %></td>
+          <td><%= transaction.course.validity %></td>
         </tr>
       <% end %>
     </tbody>

@@ -23,6 +23,12 @@
   </div>
 
   <div>
+    <%= form.label :validity %><br>
+    <%= form.select :validity, Course.validities.keys.map { |k| [k.humanize, k] } %>
+
+  </div>
+
+  <div>
     <%= form.label :course_type %><br>
     <%= form.text_field :course_type %>
   </div>
